@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hesap_makinesi/islemler.dart';
+import 'package:flutter_hesap_makinesi/sayi_buton.dart';
 
 class Anasayfa extends StatefulWidget {
 
@@ -11,10 +13,31 @@ class Anasayfa extends StatefulWidget {
 class _AnasayfaState extends State<Anasayfa> {
 
   var tfController = TextEditingController();
+  var islem = Islemler();
+
   int toplam = 0;
   late var sayilar;
-
   bool sonuc = false;
+
+  void sifirla() {
+
+    tfController.text = "";
+    toplam = 0;
+
+    sonuc = false;
+  }
+
+  void hesapla() {
+
+    sonuc = true;
+    toplam = 0;
+    var text = tfController.text;
+    sayilar = text.split("+");
+
+    for(var i=0; i<sayilar.length; i++) {
+      toplam += int.parse(sayilar[i]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +71,7 @@ class _AnasayfaState extends State<Anasayfa> {
                     ),
                   ),
                   Visibility(
-                    visible: sonuc ? true : false,
+                    visible: sonuc,
                     child: Text("= ${toplam.toString()}", style: const TextStyle(
                       color: Colors.yellow,
                       fontWeight: FontWeight.bold,
@@ -66,47 +89,17 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      SayiButon(sayi: "7", tfController: tfController),
+                      SayiButon(sayi: "8", tfController: tfController),
+                      SayiButon(sayi: "9", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          tfController.text += "7";
-                        },
-                        child: const Text("7"),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("8"),
-                        onPressed: () {
-                          tfController.text += "8";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("9"),
-                        onPressed: () {
-                          tfController.text += "9";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
+                          foregroundColor: Colors.red,
                           textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         child: const Text("\u232b"),
                         onPressed: () {
-                          var text = tfController.text;
-                          var newText = text.substring(0, text.length - 1);
-
-                          tfController.text = newText;
+                          islem.sayiSil(tfController);
                         },
                       ),
                     ],
@@ -117,36 +110,9 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("4"),
-                        onPressed: () {
-                          tfController.text += "4";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("5"),
-                        onPressed: () {
-                          tfController.text += "5";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("6"),
-                        onPressed: () {
-                          tfController.text += "6";
-                        },
-                      ),
+                      SayiButon(sayi: "4", tfController: tfController),
+                      SayiButon(sayi: "5", tfController: tfController),
+                      SayiButon(sayi: "6", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -155,9 +121,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         child: const Text("C"),
                         onPressed: () {
                           setState(() {
-                            tfController.text = "";
-                            toplam = 0;
-                            sonuc = false;
+                            sifirla();
                           });
                         },
                       ),
@@ -169,36 +133,9 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("1"),
-                        onPressed: () {
-                          tfController.text += "1";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("2"),
-                        onPressed: () {
-                          tfController.text += "2";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("3"),
-                        onPressed: () {
-                          tfController.text += "3";
-                        },
-                      ),
+                      SayiButon(sayi: "1", tfController: tfController),
+                      SayiButon(sayi: "2", tfController: tfController),
+                      SayiButon(sayi: "3", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -206,16 +143,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         ),
                         child: const Text("+"),
                         onPressed: () {
-                          var text = tfController.text;
-                          var kontrol = text.substring(text.length - 1);
-
-                          if(kontrol == "+") {
-                            return;
-                          }
-
-                          else {
-                            tfController.text += "+";
-                          }
+                          islem.toplaSimgesiKontrol(tfController);
                         },
                       ),
                     ],
@@ -233,38 +161,11 @@ class _AnasayfaState extends State<Anasayfa> {
                         ),
                         child: const Text("+/-"),
                         onPressed: () {
-                          var text = tfController.text;
-                          var plusMinus = text.substring(0, 1);
-
-                          if(plusMinus == "-") {
-                            tfController.text = text.substring(1, text.length);
-                          }
-
-                          else if(plusMinus != "-") {
-                            tfController.text = "-$text";
-                          }
+                          islem.artiEksiKontrol(tfController);
                         },
                       ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("0"),
-                        onPressed: () {
-                          tfController.text += "0";
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text("00"),
-                        onPressed: () {
-                          tfController.text += "00";
-                        },
-                      ),
+                      SayiButon(sayi: "0", tfController: tfController),
+                      SayiButon(sayi: "00", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.yellow,
@@ -273,14 +174,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         child: const Text("="),
                         onPressed: () {
                           setState(() {
-                            sonuc = true;
-                            toplam = 0;
-                            var text = tfController.text;
-                            sayilar = text.split("+");
-
-                            for(var i=0; i<sayilar.length; i++) {
-                              toplam += int.parse(sayilar[i]);
-                            }
+                            hesapla();
                           });
                         },
                       ),
