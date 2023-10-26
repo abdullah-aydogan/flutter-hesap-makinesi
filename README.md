@@ -2,7 +2,7 @@
 
 Udemy'deki Flutter Bootcamp eğitiminde verilen beşinci ödev çalışması (hesap makinesi)
 
-Hesap makinesi sadece toplama işlemi yapmakta, ilerleyen zamanlar diğer aritmetik işlemler eklenecektir.
+Hesap makinesi sadece toplama işlemi yapmakta, ilerleyen zamanlarda diğer aritmetik işlemler eklenecektir.
 
 ## Ekran Görüntüsü
 
