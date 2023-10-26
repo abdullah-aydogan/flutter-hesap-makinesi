@@ -17,8 +17,11 @@ class _AnasayfaState extends State<Anasayfa> {
 
   int toplam = 0;
   late var sayilar;
+
+  // sonuç var mı kontrolü
   bool sonuc = false;
 
+  // Yazılan sayıları ve sonucu temizle
   void sifirla() {
 
     tfController.text = "";
@@ -27,13 +30,17 @@ class _AnasayfaState extends State<Anasayfa> {
     sonuc = false;
   }
 
+  // Toplama işlemini yap
   void hesapla() {
 
     sonuc = true;
     toplam = 0;
     var text = tfController.text;
+
+    // + simgesini gördükçe sayıları dizi içine aktar
     sayilar = text.split("+");
 
+    // her bir sayıyı toplam değişkenine aktar
     for(var i=0; i<sayilar.length; i++) {
       toplam += int.parse(sayilar[i]);
     }
@@ -71,6 +78,7 @@ class _AnasayfaState extends State<Anasayfa> {
                     ),
                   ),
                   Visibility(
+                    // Sonuç varsa texti göster, sonuç yoksa gösterme
                     visible: sonuc,
                     child: Text("= ${toplam.toString()}", style: const TextStyle(
                       color: Colors.yellow,
