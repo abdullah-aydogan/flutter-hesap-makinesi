@@ -12,19 +12,19 @@ class Operations {
     tfController.text = newText;
   }
 
-  void checkSumIcon(TextEditingController tfController) {
+  void checkOperationIcon(TextEditingController tfController, String icon) {
 
     var text = tfController.text;
     var control = text.substring(text.length - 1);
 
-    // Yazının son harfinde + simgesi varsa bir daha + simgesi koyma
-    if(control == "+") {
+    // Yazının son harfinde aritmetik operatör simgesi varsa bir daha simge koyma
+    if(control == "+" || control == "-" || control == "*" || control == "/") {
       return;
     }
 
     // Değilse + simgesini koy
     else {
-      tfController.text += "+";
+      tfController.text += icon;
     }
   }
 

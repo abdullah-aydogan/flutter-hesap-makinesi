@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hesap_makinesi/operations.dart';
 import 'package:flutter_hesap_makinesi/number_button.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class Homepage extends StatefulWidget {
 
@@ -15,35 +16,34 @@ class _HomepageState extends State<Homepage> {
   var tfController = TextEditingController();
   var operation = Operations();
 
-  int sum = 0;
-  late var numbers;
+  double calculateResult = 0.0;
 
   // sonuç var mı kontrolü
-  bool result = false;
+  bool isResult = false;
 
   // Yazılan sayıları ve sonucu temizle
   void reset() {
 
     tfController.text = "";
-    sum = 0;
+    calculateResult = 0.0;
 
-    result = false;
+    isResult = false;
   }
 
-  // Toplama işlemini yap
+  // Hesaplama işlemini yap
   void calculate() {
 
-    result = true;
-    sum = 0;
+    isResult = true;
+    calculateResult = 0.0;
     var text = tfController.text;
 
-    // + simgesini gördükçe sayıları dizi içine aktar
-    numbers = text.split("+");
+    // Metni matematiksel ifadeye dönüştür ve hesapla
+    Parser p = Parser();
+    Expression exp = p.parse(text);
+    ContextModel model = ContextModel();
 
-    // her bir sayıyı toplam değişkenine aktar
-    for(var i=0; i<numbers.length; i++) {
-      sum += int.parse(numbers[i]);
-    }
+    double eval = exp.evaluate(EvaluationType.REAL, model);
+    calculateResult = eval;
   }
 
   @override
@@ -79,8 +79,8 @@ class _HomepageState extends State<Homepage> {
                   ),
                   Visibility(
                     // Sonuç varsa texti göster, sonuç yoksa gösterme
-                    visible: result,
-                    child: Text("= ${sum.toString()}", style: const TextStyle(
+                    visible: isResult,
+                    child: Text("= ${calculateResult.toString()}", style: const TextStyle(
                       color: Colors.yellow,
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -97,9 +97,6 @@ class _HomepageState extends State<Homepage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      NumberButton(number: "7", tfController: tfController),
-                      NumberButton(number: "8", tfController: tfController),
-                      NumberButton(number: "9", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.red,
@@ -108,6 +105,39 @@ class _HomepageState extends State<Homepage> {
                         child: const Text("\u232b"),
                         onPressed: () {
                           operation.deleteNumber(tfController);
+                        },
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.lightGreen,
+                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        child: const Text("C"),
+                        onPressed: () {
+                          setState(() {
+                            reset();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      NumberButton(number: "7", tfController: tfController),
+                      NumberButton(number: "8", tfController: tfController),
+                      NumberButton(number: "9", tfController: tfController),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        child: const Text("/"),
+                        onPressed: () {
+                          operation.checkOperationIcon(tfController, "/");
                         },
                       ),
                     ],
@@ -126,11 +156,9 @@ class _HomepageState extends State<Homepage> {
                           foregroundColor: Colors.white,
                           textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        child: const Text("C"),
+                        child: const Text("*"),
                         onPressed: () {
-                          setState(() {
-                            reset();
-                          });
+                          operation.checkOperationIcon(tfController, "*");
                         },
                       ),
                     ],
@@ -149,9 +177,9 @@ class _HomepageState extends State<Homepage> {
                           foregroundColor: Colors.white,
                           textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        child: const Text("+"),
+                        child: const Text("-"),
                         onPressed: () {
-                          operation.checkSumIcon(tfController);
+                          operation.checkOperationIcon(tfController, "-");
                         },
                       ),
                     ],
@@ -164,7 +192,7 @@ class _HomepageState extends State<Homepage> {
                     children: [
                       TextButton(
                         style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
+                          foregroundColor: Colors.lightBlue,
                           textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         child: const Text("+/-"),
@@ -173,7 +201,6 @@ class _HomepageState extends State<Homepage> {
                         },
                       ),
                       NumberButton(number: "0", tfController: tfController),
-                      NumberButton(number: "00", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.yellow,
@@ -184,6 +211,16 @@ class _HomepageState extends State<Homepage> {
                           setState(() {
                             calculate();
                           });
+                        },
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        child: const Text("+"),
+                        onPressed: () {
+                          operation.checkOperationIcon(tfController, "+");
                         },
                       ),
                     ],
