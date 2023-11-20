@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hesap_makinesi/anasayfa.dart';
+import 'package:flutter_hesap_makinesi/homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Anasayfa(),
+      home: const Homepage(),
     );
   }
 }

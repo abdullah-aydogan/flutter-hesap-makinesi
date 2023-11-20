@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SayiButon extends StatelessWidget {
+class NumberButton extends StatelessWidget {
 
-  var sayi;
+  var number;
   var tfController = TextEditingController();
 
-  SayiButon({required this.sayi, required this.tfController});
+  NumberButton({required this.number, required this.tfController});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,9 @@ class SayiButon extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
       onPressed: () {
-        tfController.text += sayi;
+        tfController.text += number;
       },
-      child: Text(sayi),
+      child: Text(number),
     );
   }
 }

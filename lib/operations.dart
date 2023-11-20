@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Islemler {
+class Operations {
 
-  void sayiSil(TextEditingController tfController) {
+  void deleteNumber(TextEditingController tfController) {
 
     var text = tfController.text;
 
@@ -12,13 +12,13 @@ class Islemler {
     tfController.text = newText;
   }
 
-  void toplaSimgesiKontrol(TextEditingController tfController) {
+  void checkSumIcon(TextEditingController tfController) {
 
     var text = tfController.text;
-    var kontrol = text.substring(text.length - 1);
+    var control = text.substring(text.length - 1);
 
     // Yazının son harfinde + simgesi varsa bir daha + simgesi koyma
-    if(kontrol == "+") {
+    if(control == "+") {
       return;
     }
 
@@ -28,7 +28,7 @@ class Islemler {
     }
   }
 
-  void artiEksiKontrol(TextEditingController tfController) {
+  void checkPlusMinus(TextEditingController tfController) {
 
     var text = tfController.text;
     var plusMinus = text.substring(0, 1);

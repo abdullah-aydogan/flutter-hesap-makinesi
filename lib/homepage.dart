@@ -1,48 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hesap_makinesi/islemler.dart';
-import 'package:flutter_hesap_makinesi/sayi_buton.dart';
+import 'package:flutter_hesap_makinesi/operations.dart';
+import 'package:flutter_hesap_makinesi/number_button.dart';
 
-class Anasayfa extends StatefulWidget {
+class Homepage extends StatefulWidget {
 
-  const Anasayfa({super.key});
+  const Homepage({super.key});
 
   @override
-  State<Anasayfa> createState() => _AnasayfaState();
+  State<Homepage> createState() => _HomepageState();
 }
 
-class _AnasayfaState extends State<Anasayfa> {
+class _HomepageState extends State<Homepage> {
 
   var tfController = TextEditingController();
-  var islem = Islemler();
+  var operation = Operations();
 
-  int toplam = 0;
-  late var sayilar;
+  int sum = 0;
+  late var numbers;
 
   // sonuç var mı kontrolü
-  bool sonuc = false;
+  bool result = false;
 
   // Yazılan sayıları ve sonucu temizle
-  void sifirla() {
+  void reset() {
 
     tfController.text = "";
-    toplam = 0;
+    sum = 0;
 
-    sonuc = false;
+    result = false;
   }
 
   // Toplama işlemini yap
-  void hesapla() {
+  void calculate() {
 
-    sonuc = true;
-    toplam = 0;
+    result = true;
+    sum = 0;
     var text = tfController.text;
 
     // + simgesini gördükçe sayıları dizi içine aktar
-    sayilar = text.split("+");
+    numbers = text.split("+");
 
     // her bir sayıyı toplam değişkenine aktar
-    for(var i=0; i<sayilar.length; i++) {
-      toplam += int.parse(sayilar[i]);
+    for(var i=0; i<numbers.length; i++) {
+      sum += int.parse(numbers[i]);
     }
   }
 
@@ -79,8 +79,8 @@ class _AnasayfaState extends State<Anasayfa> {
                   ),
                   Visibility(
                     // Sonuç varsa texti göster, sonuç yoksa gösterme
-                    visible: sonuc,
-                    child: Text("= ${toplam.toString()}", style: const TextStyle(
+                    visible: result,
+                    child: Text("= ${sum.toString()}", style: const TextStyle(
                       color: Colors.yellow,
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -97,9 +97,9 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SayiButon(sayi: "7", tfController: tfController),
-                      SayiButon(sayi: "8", tfController: tfController),
-                      SayiButon(sayi: "9", tfController: tfController),
+                      NumberButton(number: "7", tfController: tfController),
+                      NumberButton(number: "8", tfController: tfController),
+                      NumberButton(number: "9", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.red,
@@ -107,7 +107,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         ),
                         child: const Text("\u232b"),
                         onPressed: () {
-                          islem.sayiSil(tfController);
+                          operation.deleteNumber(tfController);
                         },
                       ),
                     ],
@@ -118,9 +118,9 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SayiButon(sayi: "4", tfController: tfController),
-                      SayiButon(sayi: "5", tfController: tfController),
-                      SayiButon(sayi: "6", tfController: tfController),
+                      NumberButton(number: "4", tfController: tfController),
+                      NumberButton(number: "5", tfController: tfController),
+                      NumberButton(number: "6", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -129,7 +129,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         child: const Text("C"),
                         onPressed: () {
                           setState(() {
-                            sifirla();
+                            reset();
                           });
                         },
                       ),
@@ -141,9 +141,9 @@ class _AnasayfaState extends State<Anasayfa> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SayiButon(sayi: "1", tfController: tfController),
-                      SayiButon(sayi: "2", tfController: tfController),
-                      SayiButon(sayi: "3", tfController: tfController),
+                      NumberButton(number: "1", tfController: tfController),
+                      NumberButton(number: "2", tfController: tfController),
+                      NumberButton(number: "3", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -151,7 +151,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         ),
                         child: const Text("+"),
                         onPressed: () {
-                          islem.toplaSimgesiKontrol(tfController);
+                          operation.checkSumIcon(tfController);
                         },
                       ),
                     ],
@@ -169,11 +169,11 @@ class _AnasayfaState extends State<Anasayfa> {
                         ),
                         child: const Text("+/-"),
                         onPressed: () {
-                          islem.artiEksiKontrol(tfController);
+                          operation.checkPlusMinus(tfController);
                         },
                       ),
-                      SayiButon(sayi: "0", tfController: tfController),
-                      SayiButon(sayi: "00", tfController: tfController),
+                      NumberButton(number: "0", tfController: tfController),
+                      NumberButton(number: "00", tfController: tfController),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.yellow,
@@ -182,7 +182,7 @@ class _AnasayfaState extends State<Anasayfa> {
                         child: const Text("="),
                         onPressed: () {
                           setState(() {
-                            hesapla();
+                            calculate();
                           });
                         },
                       ),
