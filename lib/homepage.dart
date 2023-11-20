@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hesap_makinesi/operations.dart';
 import 'package:flutter_hesap_makinesi/number_button.dart';
 import 'package:math_expressions/math_expressions.dart';
@@ -50,6 +51,10 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.black,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
         title: const Text("Hesap Makinesi"),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
