@@ -22,7 +22,7 @@ class Operations {
       return;
     }
 
-    // Değilse + simgesini koy
+    // Değilse simgeyi koy
     else {
       tfController.text += icon;
     }
