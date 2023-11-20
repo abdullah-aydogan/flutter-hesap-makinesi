@@ -2,10 +2,6 @@
 
 Udemy'deki Flutter Bootcamp eğitiminde verilen beşinci ödev çalışması (hesap makinesi)
 
-## Uygulamadan Ekran Görüntüsü
-
-![Screenshot_2023-11-20-13-30-38-19_d9e0bfe24bb53df9f53840bade521bf7](https://github.com/abdullah-aydogan/flutter-hesap-makinesi/assets/117303457/8f0f7e4e-5578-4153-8d56-0f4efc4be203)
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
